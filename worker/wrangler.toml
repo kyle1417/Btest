@@ -1,0 +1,11 @@
+name = "btest-sync"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+kv_namespaces = [
+  { binding = "SYNC", id = "08c02c209ecb4bdeaaacc95f6f3d05d8" }
+]
+
+routes = [
+  { pattern = "sync.pantao.online", custom_domain = true }
+]

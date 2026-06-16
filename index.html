@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0f766e" />
+  <title>安全员B证 · 刷题练习</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- ============ 顶部栏 ============ -->
+    <header class="topbar">
+      <button class="topbar__back" id="btnBack" hidden>‹</button>
+      <h1 class="topbar__title" id="topTitle">见安全，行致远</h1>
+      <div class="topbar__right" id="topRight"></div>
+    </header>
+
+    <main id="main">
+
+      <!-- ============ 首页 ============ -->
+      <section class="view view--home" data-view="home">
+        <div class="hero">
+          <div class="hero__title">2025 安全员B证</div>
+          <div class="hero__sub">题库练习 · 模拟考试</div>
+          <div class="hero__stat" id="homeStat"></div>
+        </div>
+
+        <div class="grid">
+          <button class="card card--practice" data-go="practiceSetup">
+            <span class="card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+            <span class="card__body">
+              <span class="card__name">练习模式</span>
+              <span class="card__desc">答完即时对错 + 解析</span>
+            </span>
+          </button>
+          <button class="card card--papers" data-go="papers">
+            <span class="card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span>
+            <span class="card__body">
+              <span class="card__name">历年真题</span>
+              <span class="card__desc">2024 / 2025 整卷模拟 · 交卷算分</span>
+            </span>
+          </button>
+          <button class="card card--exam" data-go="examSetup">
+            <span class="card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg></span>
+            <span class="card__name">考试模式</span>
+            <span class="card__desc">限时模拟卷 · 交卷算分</span>
+          </button>
+          <button class="card card--wrong" data-go="wrongbook">
+            <span class="card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span>
+            <span class="card__name">错题本</span>
+            <span class="card__desc" id="wrongCount">0 题</span>
+          </button>
+          <button class="card card--fav" data-go="favbook">
+            <span class="card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+            <span class="card__name">收藏夹</span>
+            <span class="card__desc" id="favCount">0 题</span>
+          </button>
+          <button class="card card--sync" data-go="sync">
+            <span class="card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 0 0-9-9 9 9 0 0 0-6.4 2.6L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9 9 0 0 0 6.4-2.6L21 16"/><path d="M21 21v-5h-5"/></svg></span>
+            <span class="card__name">云同步</span>
+            <span class="card__desc" id="syncCardDesc">PC/手机进度互通</span>
+          </button>
+          <button class="card card--search" data-go="search">
+            <span class="card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+            <span class="card__name">题目搜索</span>
+            <span class="card__desc">按关键词查题</span>
+          </button>
+          <button class="card card--reset" id="btnResetAll">
+            <span class="card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg></span>
+            <span class="card__name">清除记录</span>
+            <span class="card__desc">进度/错题/收藏</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ============ 练习设置 ============ -->
+      <section class="view" data-view="practiceSetup" hidden>
+        <div class="setup">
+          <h2 class="setup__h">选择题型</h2>
+          <div class="seg" id="practiceType">
+            <button class="seg__btn is-active" data-val="all">全部</button>
+            <button class="seg__btn" data-val="single">单选</button>
+            <button class="seg__btn" data-val="multiple">多选</button>
+            <button class="seg__btn" data-val="judge">判断</button>
+          </div>
+
+          <h2 class="setup__h">出题顺序</h2>
+          <div class="seg" id="practiceOrder">
+            <button class="seg__btn is-active" data-val="seq">顺序</button>
+            <button class="seg__btn" data-val="random">随机</button>
+          </div>
+
+          <label class="switch">
+            <input type="checkbox" id="practiceResume" checked />
+            <span>记住上次进度（继续作答）</span>
+          </label>
+
+          <div class="setup__info" id="practiceInfo"></div>
+          <button class="btn btn--primary btn--block" id="btnStartPractice">开始练习</button>
+        </div>
+      </section>
+
+      <!-- ============ 考试设置 ============ -->
+      <section class="view" data-view="examSetup" hidden>
+        <div class="setup">
+          <h2 class="setup__h">试卷构成</h2>
+          <div class="exam-row"><span>单选题</span><input type="number" id="examSingle" min="0" value="40" /> 题 × 1 分</div>
+          <div class="exam-row"><span>多选题</span><input type="number" id="examMultiple" min="0" value="20" /> 题 × 2 分</div>
+          <div class="exam-row"><span>判断题</span><input type="number" id="examJudge" min="0" value="20" /> 题 × 1 分</div>
+
+          <h2 class="setup__h">考试时长（分钟）</h2>
+          <input type="number" id="examMinutes" min="1" value="60" class="exam-minutes" />
+
+          <div class="setup__info" id="examInfo"></div>
+          <button class="btn btn--primary btn--block" id="btnStartExam">开始考试</button>
+        </div>
+      </section>
+
+      <!-- ============ 历年真题（选年份） ============ -->
+      <section class="view" data-view="papers" hidden>
+        <div class="papers" id="papersBox"></div>
+      </section>
+
+      <!-- ============ 答题视图（练习/考试通用） ============ -->
+      <section class="view view--quiz" data-view="quiz" hidden>
+        <div class="quiz">
+          <div class="quiz__bar">
+            <button class="quiz__progress" id="qNavToggle" title="题号跳转"><span id="qIndex">1</span>/<span id="qTotal">1</span><span class="quiz__navcaret">▾</span></button>
+            <div class="quiz__timer" id="qTimer" hidden>00:00</div>
+            <button class="quiz__fav" id="qFav" title="收藏"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+          </div>
+          <div class="quiz__progressbar"><i id="qProgressFill"></i></div>
+          <div class="qnav" id="qNav" hidden>
+            <div class="qnav__legend">
+              <span><i class="qnav__dot is-cur"></i>当前</span>
+              <span><i class="qnav__dot is-ans"></i>已答</span>
+              <span><i class="qnav__dot is-right"></i>对</span>
+              <span><i class="qnav__dot is-wrong2"></i>错</span>
+            </div>
+            <div class="qnav__grid" id="qNavGrid"></div>
+          </div>
+
+          <div class="qcard" id="qCard"><!-- 动态渲染 --></div>
+
+          <div class="quiz__feedback" id="qFeedback" hidden></div>
+
+          <div class="quiz__foot">
+            <button class="btn btn--ghost" id="btnPrev">上一题</button>
+            <button class="btn btn--primary" id="btnSubmitOrNext">提交</button>
+          </div>
+          <button class="btn btn--ghost btn--block" id="btnFinishExam" hidden>交卷</button>
+        </div>
+      </section>
+
+      <!-- ============ 考试结果 ============ -->
+      <section class="view" data-view="examResult" hidden>
+        <div class="result" id="examResultBox"></div>
+      </section>
+
+      <!-- ============ 错题本 / 收藏夹 / 搜索 列表 ============ -->
+      <section class="view" data-view="list" hidden>
+        <div class="list" id="listBox"></div>
+      </section>
+
+      <!-- ============ 云同步 ============ -->
+      <section class="view" data-view="sync" hidden>
+        <div class="setup sync">
+          <p class="sync__desc">在电脑和手机上输入<b>同一个同步码</b>，错题、收藏、练习进度即可云端互通。</p>
+          <h2 class="setup__h">同步码</h2>
+          <div class="sync__row">
+            <input type="text" id="syncCodeInput" placeholder="4-64 位字母 / 数字" maxlength="64" autocomplete="off" autocapitalize="off" spellcheck="false" />
+            <button class="btn btn--ghost" id="btnGenCode">随机生成</button>
+          </div>
+          <button class="btn btn--primary btn--block" id="btnSyncNow">保存并立即同步</button>
+          <button class="btn btn--ghost btn--block" id="btnSyncOff" hidden>停止同步（清除本机同步码）</button>
+          <div class="sync__status" id="syncStatus"></div>
+          <div class="sync__snaps" id="syncSnaps"></div>
+          <div class="sync__hint">同步码相当于密码，请妥善保管；知道它的人都能读写你的数据。换设备时，输入相同同步码并点「立即同步」即可。</div>
+        </div>
+      </section>
+
+      <!-- ============ 搜索 ============ -->
+      <section class="view" data-view="search" hidden>
+        <div class="search">
+          <input type="search" id="searchInput" placeholder="输入关键词，如：安全生产许可证" />
+          <div class="search__result" id="searchResult"></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="js/questions.js"></script>
+  <script src="js/papers.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

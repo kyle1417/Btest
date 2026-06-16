@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"/>
+<title>方案B · 安全标识</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap');
+:root{
+  --bg:#eceef0; --card:#ffffff; --ink:#1f2226; --ink2:#71777e; --line:#e2e5e9;
+  --char:#22262b; --amber:#e8920c; --amber-d:#cf7d04; --ok:#1f8a4c; --no:#d8442e;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#dadde1;font-family:"Noto Sans SC",-apple-system,sans-serif;color:var(--ink);
+  display:flex;gap:40px;flex-wrap:wrap;justify-content:center;padding:48px 24px;-webkit-font-smoothing:antialiased}
+.label{width:100%;text-align:center;font-size:22px;font-weight:900;letter-spacing:1px;margin-bottom:4px}
+.sub{width:100%;text-align:center;color:#5a5f64;font-size:13px;margin-bottom:24px}
+.phone{width:340px;background:var(--bg);border-radius:30px;overflow:hidden;
+  box-shadow:0 20px 50px rgba(20,25,30,.25);border:8px solid #121417}
+.cap{font-size:12px;color:#6a6f74;text-align:center;margin-top:10px;letter-spacing:.5px}
+.frame{height:640px;overflow-y:auto;background:var(--bg)}
+.frame::-webkit-scrollbar{display:none}
+
+.top{height:50px;display:flex;align-items:center;padding:0 16px;background:var(--char);color:#fff;position:sticky;top:0;z-index:5;
+  border-bottom:3px solid var(--amber)}
+.top .t{flex:1;text-align:center;font-size:16px;font-weight:700;letter-spacing:1px}
+.top .b{width:28px;font-size:24px;line-height:1;color:rgba(255,255,255,.85)}
+.view{padding:16px}
+
+.hero{background:var(--char);color:#fff;border-radius:12px;padding:22px 20px;position:relative;overflow:hidden;margin-bottom:18px}
+.hero::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;
+  background:repeating-linear-gradient(45deg,var(--amber) 0 14px,#22262b 14px 28px)}
+.hero .badge{font-size:11px;letter-spacing:2px;color:var(--amber);font-weight:700;margin-top:6px}
+.hero h2{font-size:27px;font-weight:900;letter-spacing:1px;margin-top:6px}
+.hero .desc{font-size:13px;color:#b7bcc2;margin-top:3px}
+.hero .stat{margin-top:16px;display:inline-block;font-size:12px;color:#22262b;background:var(--amber);
+  padding:6px 13px;border-radius:6px;font-weight:700}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:15px 14px;
+  display:flex;flex-direction:column;gap:6px;cursor:pointer;transition:.15s}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(20,25,30,.1)}
+.card .ic{width:30px;height:30px;color:var(--char);background:#f1f3f5;border-radius:8px;padding:5px}
+.card .ic svg{width:100%;height:100%;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.card .nm{font-size:16px;font-weight:700;margin-top:2px}
+.card .ds{font-size:11px;color:var(--ink2);line-height:1.4}
+.card.primary{grid-column:1/3;flex-direction:row;align-items:center;gap:14px;background:var(--char);border:none}
+.card.primary .ic{background:var(--amber);color:#22262b;width:38px;height:38px;padding:7px}
+.card.primary .nm{color:#fff}.card.primary .ds{color:#aeb3b9}
+.card.primary .txt{flex:1}
+
+.qbar{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.qprog{font-size:15px;font-weight:900;color:var(--ink)}
+.qprog b{color:var(--amber-d)}
+.qfav{margin-left:auto;width:25px;height:25px;color:var(--amber);cursor:pointer}
+.qfav svg{width:100%;height:100%;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linejoin:round}
+.qfav.on svg{fill:currentColor}
+.qpb{height:4px;background:#d8dce0;border-radius:3px;overflow:hidden;margin-bottom:18px}
+.qpb i{display:block;height:100%;width:35%;background:var(--amber)}
+.qtype{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;padding:4px 11px;border-radius:6px;
+  background:var(--char);color:#fff;margin-bottom:12px}
+.qstem{font-size:17px;line-height:1.75;font-weight:500;margin-bottom:18px}
+.qstem .qid{color:var(--ink2);font-weight:700;margin-right:5px}
+.opt{display:flex;align-items:flex-start;gap:12px;padding:13px 14px;margin-bottom:10px;
+  border:1.5px solid var(--line);border-radius:10px;background:var(--card);font-size:15px}
+.opt .k{flex:none;width:25px;height:25px;border:1.5px solid var(--line);border-radius:6px;
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--ink2)}
+.opt.chosen{border-color:var(--amber-d);background:#fdf4e6}
+.opt.chosen .k{background:var(--amber-d);color:#fff;border-color:var(--amber-d)}
+.opt.correct{border-color:var(--ok);background:#edf7f0}
+.opt.correct .k{background:var(--ok);color:#fff;border-color:var(--ok)}
+.opt.wrong{border-color:var(--no);background:#fbedea}
+.opt.wrong .k{background:var(--no);color:#fff;border-color:var(--no)}
+.fb{border-radius:10px;padding:14px;margin:4px 0 14px;font-size:13px;line-height:1.7;border:1.5px solid}
+.fb.ok{background:#edf7f0;border-color:#c9e6d3}
+.fb .ttl{font-weight:700;margin-bottom:5px;color:var(--ok)}
+.fb .exp{margin-top:7px;color:var(--ink2)}
+.foot{display:flex;gap:10px;margin-top:4px}
+.btn{flex:1;padding:13px;border-radius:10px;font-size:15px;font-weight:700;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.btn.pri{background:var(--amber);color:#22262b;border-color:var(--amber)}
+</style></head>
+<body>
+<div class="label">方案 B · 安全标识</div>
+<div class="sub">石墨炭灰 + 安全琥珀黄 + 斜纹警示条 · 呼应建筑安全行业气质，醒目有性格</div>
+
+<div>
+<div class="phone"><div class="frame">
+  <div class="top"><span class="b"></span><span class="t">安全员B证 刷题</span><span class="b"></span></div>
+  <div class="view">
+    <div class="hero">
+      <div class="badge">2025 建筑施工安全</div>
+      <h2>安全员B证</h2>
+      <div class="desc">题库练习 · 模拟考试</div>
+      <div class="stat">共 2000 题　单选 / 多选 / 判断</div>
+    </div>
+    <div class="grid">
+      <div class="card primary">
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+        <div class="txt"><div class="nm">练习模式</div><div class="ds">答完即时对错 + 解析</div></div>
+      </div>
+      <div class="card">
+        <span class="ic"><svg viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg></span>
+        <div class="nm">考试模式</div><div class="ds">限时模拟卷 · 交卷算分</div>
+      </div>
+      <div class="card">
+        <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span>
+        <div class="nm">错题本</div><div class="ds">12 题待巩固</div>
+      </div>
+      <div class="card">
+        <span class="ic"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+        <div class="nm">收藏夹</div><div class="ds">8 题</div>
+      </div>
+      <div class="card">
+        <span class="ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+        <div class="nm">题目搜索</div><div class="ds">按关键词查题</div>
+      </div>
+      <div class="card">
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg></span>
+        <div class="nm">清除记录</div><div class="ds">进度 / 错题 / 收藏</div>
+      </div>
+    </div>
+  </div>
+</div></div>
+<div class="cap">首页</div>
+</div>
+
+<div>
+<div class="phone"><div class="frame">
+  <div class="top"><span class="b">‹</span><span class="t">练习模式</span><span class="b"></span></div>
+  <div class="view">
+    <div class="qbar"><span class="qprog"><b>3</b> / 2000</span>
+      <span class="qfav on"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+    </div>
+    <div class="qpb"><i></i></div>
+    <div class="qtype">单选题</div>
+    <div class="qstem"><span class="qid">3.</span>建筑施工企业取得安全生产许可证，应当具备的安全生产条件不包括（）。</div>
+    <div class="opt"><span class="k">A</span><span>建立健全安全生产责任制</span></div>
+    <div class="opt correct"><span class="k">B</span><span>主要负责人年龄不超过45周岁</span></div>
+    <div class="opt wrong"><span class="k">C</span><span>保证本单位安全生产条件所需资金投入</span></div>
+    <div class="opt"><span class="k">D</span><span>依法参加工伤保险</span></div>
+    <div class="fb ok"><div class="ttl">✓ 回答正确</div>
+      <div>正确答案：<b>B. 主要负责人年龄不超过45周岁</b></div>
+      <div class="exp">解析：安全生产许可证条件由《安全生产许可证条例》规定，无年龄限制项。</div></div>
+    <div class="foot"><button class="btn">上一题</button><button class="btn pri">下一题</button></div>
+  </div>
+</div></div>
+<div class="cap">答题页（练习 · 已提交）</div>
+</div>
+</body></html>

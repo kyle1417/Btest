@@ -1,0 +1,226 @@
+:root{
+  --accent:#0f766e; --accent-s:#0b5a54; --accent-bg:#e6f2f0;
+  --green:#0f766e; --red:#c2410c;
+  --bg:#f6f7f8; --card:#ffffff; --txt:#16191d; --txt2:#787f87; --line:#eceef1;
+  --gold:#e0a82e; --shadow:0 1px 2px rgba(20,25,30,.04);
+  --radius:14px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--txt); font-size:16px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input{font-family:inherit}
+
+#app{max-width:680px;margin:0 auto;min-height:100vh;background:var(--bg);display:flex;flex-direction:column}
+
+/* ---------- 顶部栏 ---------- */
+.topbar{
+  position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:8px;
+  height:52px;padding:0 12px;background:var(--card);color:var(--txt);
+  border-bottom:1px solid var(--line);
+}
+.topbar__back{font-size:30px;line-height:1;color:var(--accent);width:32px;height:44px;margin-left:-6px;position:relative;z-index:1}
+.topbar__title{position:absolute;left:50%;transform:translateX(-50%);max-width:62%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  font-size:17px;font-weight:600;margin:0;text-align:center;letter-spacing:.5px;pointer-events:none}
+.topbar__right{margin-left:auto;min-width:32px;text-align:right;font-size:14px;color:var(--txt2)}
+
+#main{flex:1;display:flex;flex-direction:column}
+.view{padding:16px;animation:fade .2s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* ---------- 首页 ---------- */
+.hero{
+  background:var(--accent);color:#fff;border-radius:16px;
+  padding:22px 20px;margin-bottom:18px;
+}
+.hero__title{font-size:26px;font-weight:700;letter-spacing:.5px}
+.hero__sub{color:#cfe7e3;margin-top:3px;font-size:13px}
+.hero__stat{margin-top:16px;font-size:12px;color:#eafaf7;background:rgba(255,255,255,.16);
+  display:inline-block;padding:6px 13px;border-radius:20px}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 14px;text-align:left;
+  box-shadow:var(--shadow);display:flex;flex-direction:column;gap:6px;transition:transform .15s,box-shadow .15s,border-color .15s;
+}
+.card:active{transform:scale(.98)}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(15,118,110,.1);border-color:#d6dadf}
+.card__icon{width:28px;height:28px;color:var(--accent);margin-bottom:2px}
+.card__icon svg{width:100%;height:100%;stroke:currentColor;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.card__name{font-size:16px;font-weight:600}
+.card__desc{font-size:12px;color:var(--txt2);line-height:1.4}
+
+/* 练习模式做成整行主操作 */
+.card--practice{grid-column:1/3;flex-direction:row;align-items:center;gap:14px;
+  background:var(--accent-bg);border-color:#cfe6e2}
+.card--practice .card__icon{width:32px;height:32px;margin-bottom:0;flex:none}
+.card--practice .card__body{display:flex;flex-direction:column;gap:4px}
+.card--practice .card__name{font-size:17px}
+.card--exam{grid-column:1/2}
+.card--wrong{grid-column:2/3}
+
+/* 历年真题：整行卡 */
+.card--papers{grid-column:1/3;flex-direction:row;align-items:center;gap:14px;
+  background:var(--accent-bg);border-color:#cfe6e2}
+.card--papers .card__icon{width:30px;height:30px;margin-bottom:0;flex:none;color:var(--accent)}
+.card--papers .card__body{display:flex;flex-direction:column;gap:4px}
+.card--papers .card__name{font-size:16px}
+
+/* 历年真题：年份列表 */
+.paper-card{display:flex;align-items:center;gap:14px;width:100%;text-align:left;cursor:pointer;
+  background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 14px;margin-bottom:11px;
+  box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s,border-color .15s}
+.paper-card:active{transform:scale(.99)}
+.paper-card__year{font-size:22px;font-weight:700;color:#ea580c;min-width:54px;flex:none}
+.paper-card__body{display:flex;flex-direction:column;gap:4px;flex:1}
+.paper-card__name{font-size:15px;font-weight:600}
+.paper-card__desc{font-size:12px;color:var(--txt2);line-height:1.4}
+.paper-card__go{font-size:24px;color:var(--txt2);flex:none}
+
+/* ---------- 设置页 ---------- */
+.setup{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+.setup__h{font-size:15px;font-weight:600;margin:18px 0 10px}
+.setup__h:first-child{margin-top:0}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg__btn{
+  flex:1;min-width:60px;padding:10px 6px;border-radius:10px;background:var(--bg);
+  color:var(--txt);font-size:15px;border:1.5px solid var(--line);transition:.12s;
+}
+.seg__btn.is-active{background:var(--accent);color:#fff;font-weight:600;border-color:var(--accent)}
+.switch{display:flex;align-items:center;gap:10px;margin-top:18px;font-size:14px;color:var(--txt2)}
+.switch input{width:18px;height:18px;accent-color:var(--accent)}
+.setup__info{margin:16px 0;font-size:13px;color:var(--txt2);min-height:20px}
+.exam-row{display:flex;align-items:center;gap:8px;padding:8px 0;font-size:15px;border-bottom:1px solid var(--line)}
+.exam-row span{flex:1}
+.exam-row input,.exam-minutes{width:64px;padding:8px;border:1.5px solid var(--line);border-radius:8px;text-align:center;font-size:15px}
+.exam-minutes{width:100%}
+
+/* ---------- 云同步 ---------- */
+.sync__desc{font-size:14px;color:var(--txt2);line-height:1.7;margin-bottom:4px}
+.sync__row{display:flex;gap:8px;align-items:center}
+.sync__row input{flex:1;min-width:0;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;font-size:15px;letter-spacing:1px}
+.sync__row .btn{flex:none;padding:11px 14px;font-size:14px}
+.sync__status{margin:14px 0 4px;font-size:13px;color:var(--accent-s);min-height:18px;word-break:break-all}
+.sync__snaps{margin-top:6px}
+.sync__snaptitle{font-size:12px;color:var(--txt2);margin:8px 0 8px}
+.sync__snap{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;margin-bottom:8px;font-size:14px}
+.sync__snap.is-cur{background:var(--accent-bg);border-color:#bcdbd6}
+.sync__snap[data-restore]{cursor:pointer}
+.sync__snap[data-restore]:active{transform:scale(.99)}
+.sync__snapdot{width:9px;height:9px;border-radius:50%;background:var(--txt2);flex:none}
+.sync__snap.is-cur .sync__snapdot{background:#16a34a}
+.sync__snaptime{font-weight:600;font-variant-numeric:tabular-nums}
+.sync__snapinfo{color:var(--txt2);font-size:12px}
+.sync__snaptag{margin-left:auto;font-size:12px;font-weight:600;padding:3px 11px;border-radius:7px}
+.sync__snap.is-cur .sync__snaptag{background:#dff0ed;color:var(--accent-s)}
+.sync__snap[data-restore] .sync__snaptag{background:var(--accent);color:#fff}
+.sync__hint{margin-top:14px;font-size:12px;color:var(--txt2);line-height:1.7;padding:10px 12px;background:var(--accent-bg);border-radius:10px}
+
+/* ---------- 按钮 ---------- */
+.btn{padding:13px 18px;border-radius:12px;font-size:16px;font-weight:600;transition:.12s;border:1.5px solid var(--line);background:var(--card);color:var(--txt)}
+.btn:active{transform:scale(.98)}
+.btn--primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn--primary:active{background:var(--accent-s)}
+.btn--ghost{background:var(--card);color:var(--txt)}
+.btn--block{display:block;width:100%;margin-top:14px}
+.btn:disabled{opacity:.5}
+
+/* ---------- 答题 ---------- */
+.quiz{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+.quiz__bar{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.quiz__progress{font-size:15px;color:var(--txt2);font-weight:600}
+.quiz__progress #qIndex{color:var(--accent);font-weight:700}
+.quiz__timer{margin-left:auto;font-size:15px;font-weight:700;color:var(--red);font-variant-numeric:tabular-nums}
+.quiz__fav{width:24px;height:24px;color:var(--gold);margin-left:auto;line-height:0;padding:0}
+.quiz__fav svg{width:100%;height:100%;stroke:currentColor;stroke-width:1.7;fill:none;stroke-linejoin:round}
+.quiz__fav.is-on svg{fill:currentColor}
+.quiz__timer:not([hidden]) + .quiz__fav{margin-left:12px}
+.quiz__progressbar{height:4px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:18px}
+.quiz__progressbar i{display:block;height:100%;background:var(--accent);width:0;border-radius:3px;transition:width .25s}
+
+/* 题号跳转面板 */
+.quiz__progress{display:inline-flex;align-items:center;gap:3px;padding:2px 4px;margin:-2px -4px;border-radius:8px}
+.quiz__progress:active{background:var(--bg)}
+.quiz__navcaret{font-size:11px;color:var(--txt2);transition:transform .15s}
+.quiz__progress.is-open .quiz__navcaret{transform:rotate(180deg)}
+.qnav{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:16px;background:#fbfcfc}
+.qnav__legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--txt2);margin-bottom:10px}
+.qnav__legend span{display:inline-flex;align-items:center;gap:5px}
+.qnav__dot{width:11px;height:11px;border-radius:3px;border:1.5px solid var(--line);background:var(--card);display:inline-block}
+.qnav__dot.is-cur{background:var(--accent);border-color:var(--accent)}
+.qnav__dot.is-ans{background:var(--accent-bg);border-color:#bcdbd6}
+.qnav__dot.is-right{background:#16a34a;border-color:#16a34a}
+.qnav__dot.is-wrong2{background:var(--red);border-color:var(--red)}
+.qnav__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:7px;max-height:230px;overflow:auto}
+.qnav__cell{height:36px;border:1.5px solid var(--line);border-radius:8px;background:var(--card);
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  font-size:13px;font-weight:600;color:var(--txt);font-variant-numeric:tabular-nums;transition:.1s}
+.qnav__cell.is-ans{background:var(--accent-bg);border-color:#bcdbd6;color:var(--accent-s)}
+.qnav__cell.is-right{background:#16a34a;border-color:#16a34a;color:#fff}
+.qnav__cell.is-wrong2{background:var(--red);border-color:var(--red);color:#fff}
+.qnav__cell.is-cur{outline:2px solid var(--accent);outline-offset:1px;background:var(--accent);border-color:var(--accent);color:#fff}
+
+.qtype{display:inline-block;font-size:11px;padding:4px 11px;border-radius:8px;background:var(--accent-bg);color:var(--accent-s);font-weight:600;letter-spacing:.5px;margin-bottom:12px}
+.qtype--multiple{background:#fef3c7;color:#92600a}
+.qtype--judge{background:#e6f2f0;color:var(--accent-s)}
+.qstem{font-size:17px;line-height:1.75;margin-bottom:18px;font-weight:500}
+.qstem .qid{color:var(--txt2);font-weight:400;font-size:15px;margin-right:5px}
+
+.opt{
+  display:flex;align-items:flex-start;gap:12px;padding:13px 14px;margin-bottom:10px;
+  border:1.5px solid var(--line);border-radius:12px;background:var(--card);transition:.12s;font-size:16px;
+}
+.opt:active{background:#f9fafb}
+.opt__key{flex:none;width:25px;height:25px;border-radius:50%;border:1.5px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--txt2)}
+.opt__txt{flex:1}
+.opt.is-chosen{border-color:var(--accent);background:var(--accent-bg)}
+.opt.is-chosen .opt__key{background:var(--accent);color:#fff;border-color:var(--accent)}
+.opt.is-correct{border-color:var(--green);background:var(--accent-bg)}
+.opt.is-correct .opt__key{background:var(--green);color:#fff;border-color:var(--green)}
+.opt.is-wrong{border-color:var(--red);background:#fdf0e9}
+.opt.is-wrong .opt__key{background:var(--red);color:#fff;border-color:var(--red)}
+.opt.is-locked{pointer-events:none}
+
+.quiz__feedback{border-radius:12px;padding:14px;margin-bottom:14px;font-size:14px;line-height:1.7}
+.quiz__feedback.ok{background:var(--accent-bg)}
+.quiz__feedback.no{background:#fdf0e9}
+.fb__title{font-weight:700;margin-bottom:6px}
+.fb__title.ok{color:var(--green)}
+.fb__title.no{color:var(--red)}
+.fb__ans b{color:var(--txt)}
+.fb__exp{margin-top:8px;color:var(--txt2);white-space:pre-line}
+
+.quiz__foot{display:flex;gap:12px}
+.quiz__foot .btn{flex:1}
+
+/* ---------- 结果 ---------- */
+.result{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);text-align:center}
+.result__score{font-size:54px;font-weight:800;color:var(--accent);line-height:1}
+.result__score.pass{color:var(--green)}
+.result__score.fail{color:var(--red)}
+.result__label{color:var(--txt2);margin:6px 0 18px}
+.result__meta{display:flex;justify-content:space-around;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.result__meta div{font-size:14px}
+.result__meta b{display:block;font-size:20px;color:var(--txt)}
+
+/* ---------- 列表/搜索 ---------- */
+.list__empty,.search__empty{text-align:center;color:var(--txt2);padding:50px 20px}
+.qitem{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:var(--shadow)}
+.qitem__type{font-size:12px;color:var(--accent);font-weight:600}
+.qitem__stem{margin:4px 0 8px;font-size:15px}
+.qitem__ans{font-size:13px;color:var(--green)}
+.qitem__btns{display:flex;gap:10px;margin-top:10px}
+.qitem__btns .btn{flex:1;padding:8px;font-size:14px}
+
+.search input[type=search]{width:100%;padding:13px 16px;border:1.5px solid var(--line);
+  border-radius:12px;font-size:16px;background:var(--card);box-shadow:var(--shadow)}
+.search input[type=search]:focus{outline:none;border-color:var(--accent)}
+.search__result{margin-top:14px}
+
+.list .btn--block,.search .btn--block{margin-top:4px}
